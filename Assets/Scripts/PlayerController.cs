@@ -126,11 +126,11 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Handle dash input from the input system
     /// </summary>
-    void OnDash()
+    /*void OnDash()
     {
         if (!GameManager.Instance.IsShowingPauseMenu && dashController)
             dashController.TryStartDash(moveDirection);
-    }
+    }*/
 
     void OnCameraOrbit(InputValue inputVal)
     {
