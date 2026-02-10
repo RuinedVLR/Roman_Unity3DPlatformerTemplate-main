@@ -27,10 +27,10 @@ public class ThirdPersonCamera : MonoBehaviour
 	[SerializeField] private float minimumDistance = 5f;
 	
 	/// <summary>
-	/// The pivot point used for orbital movement around the target
+	/// The pivot point used for orbital movement around the target on y-Axis
 	/// </summary>
 	private Transform orbitPivot;
-	
+
 	/// <summary>
 	/// The original offset value, used to restore camera position after collision
 	/// </summary>
@@ -58,9 +58,9 @@ public class ThirdPersonCamera : MonoBehaviour
 	/// </summary>
 	private void InitializeOrbitPivot()
 	{
-		orbitPivot = new GameObject("Camera Orbit Pivot").transform;
+		orbitPivot = new GameObject("Camera Orbit Pivot Y").transform;
 		DontDestroyOnLoad(orbitPivot);
-	}
+    }
 
     private void OnDestroy()
     {
@@ -117,14 +117,16 @@ public class ThirdPersonCamera : MonoBehaviour
 	{
 		// Update orbit pivot position
 		orbitPivot.position = followTarget.transform.position + orbitPivot.transform.TransformDirection(cameraOffset);
-		//orbitPivot.Translate(cameraOffset, Space.Self);
-		
-		// Orbit around target based on input
-		float rotationAmount = OrbitInput * orbitSpeed * Time.deltaTime;
+        //orbitPivot.Translate(cameraOffset, Space.Self);
+
+        // Orbit around target based on input
+        float rotationAmount = OrbitInput * orbitSpeed * Time.deltaTime;
 		orbitPivot.RotateAround(followTarget.position, Vector3.up, rotationAmount);
-		
-		// Smoothly move camera to pivot position
-		transform.position = Vector3.Lerp(
+
+
+
+        // Smoothly move camera to pivot position
+        transform.position = Vector3.Lerp(
 			transform.position, 
 			orbitPivot.position, 
 			positionLerpSpeed * Time.deltaTime
