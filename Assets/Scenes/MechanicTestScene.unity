@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -42,8 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -96,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -362,9 +359,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203844586}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 11
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -414,8 +410,12 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!4 &203844589
 Transform:
   m_ObjectHideFlags: 0
@@ -588,8 +588,8 @@ Mesh:
   m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
+  'm_MeshMetrics[0]': 1
+  'm_MeshMetrics[1]': 1
   m_MeshOptimizationFlags: 1
   m_StreamData:
     serializedVersion: 2
@@ -942,6 +942,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1380,7 +1383,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 047951988bf256c4eae577d59ab0b1c8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 3ad274cdd42d4b6419f2fb188d9d750b, type: 2}
     - target: {fileID: 11400000, guid: 047951988bf256c4eae577d59ab0b1c8, type: 3}
@@ -1570,27 +1573,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3653226674542870389, guid: 961b9c116a0ab924f92702dd50898555,
         type: 3}
-      propertyPath: managedReferences[4088386754863169536]
+      propertyPath: 'managedReferences[4088386754863169536]'
       value: Assembly-CSharp DebugTriggerAction
       objectReference: {fileID: 0}
     - target: {fileID: 3653226674542870389, guid: 961b9c116a0ab924f92702dd50898555,
         type: 3}
-      propertyPath: managedReferences[4088386754863169537]
+      propertyPath: 'managedReferences[4088386754863169537]'
       value: Assembly-CSharp DisplayScreenTextAction
       objectReference: {fileID: 0}
     - target: {fileID: 3653226674542870389, guid: 961b9c116a0ab924f92702dd50898555,
         type: 3}
-      propertyPath: managedReferences[4088386754863169538]
+      propertyPath: 'managedReferences[4088386754863169538]'
       value: Assembly-CSharp DisplayScreenTextAction
       objectReference: {fileID: 0}
     - target: {fileID: 3653226674542870389, guid: 961b9c116a0ab924f92702dd50898555,
         type: 3}
-      propertyPath: managedReferences[4088386768848027648]
+      propertyPath: 'managedReferences[4088386768848027648]'
       value: Assembly-CSharp DelayAction
       objectReference: {fileID: 0}
     - target: {fileID: 3653226674542870389, guid: 961b9c116a0ab924f92702dd50898555,
         type: 3}
-      propertyPath: managedReferences[4088386768848027649]
+      propertyPath: 'managedReferences[4088386768848027649]'
       value: Assembly-CSharp DebugTriggerAction
       objectReference: {fileID: 0}
     - target: {fileID: 3653226674542870389, guid: 961b9c116a0ab924f92702dd50898555,
@@ -1600,17 +1603,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3653226674542870389, guid: 961b9c116a0ab924f92702dd50898555,
         type: 3}
-      propertyPath: managedReferences[1000].list.Array.data[0]
+      propertyPath: 'managedReferences[1000].list.Array.data[0]'
       value: 4088386754863169536
       objectReference: {fileID: 0}
     - target: {fileID: 3653226674542870389, guid: 961b9c116a0ab924f92702dd50898555,
         type: 3}
-      propertyPath: managedReferences[1000].list.Array.data[1]
+      propertyPath: 'managedReferences[1000].list.Array.data[1]'
       value: 4088386768848027648
       objectReference: {fileID: 0}
     - target: {fileID: 3653226674542870389, guid: 961b9c116a0ab924f92702dd50898555,
         type: 3}
-      propertyPath: managedReferences[1000].list.Array.data[2]
+      propertyPath: 'managedReferences[1000].list.Array.data[2]'
       value: 4088386768848027649
       objectReference: {fileID: 0}
     - target: {fileID: 3653226674542870389, guid: 961b9c116a0ab924f92702dd50898555,
@@ -1838,11 +1841,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95627628a915d934494257c759494cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshFilter: {fileID: 1499830193}
-  meshrend: {fileID: 1499830192}
-  desiredTexture: {fileID: 2800000, guid: c6ba8ae162b9ef14ca5296e17d6c3309, type: 3}
-  desiredColor: {r: 1, g: 1, b: 1, a: 1}
-  _TestButton: 0
 --- !u!65 &1499830191
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1881,6 +1879,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2116,6 +2117,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2158,7 +2162,7 @@ Transform:
   m_GameObject: {fileID: 1639188144}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.21, y: 0.24960041, z: 16.27}
+  m_LocalPosition: {x: 13.21, y: 1.2, z: 16.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2221,6 +2225,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2326,6 +2333,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2474,6 +2484,74 @@ MonoBehaviour:
   moveSpeed: 5
   waitTime: 1
   pattern: 1
+--- !u!1001 &2458312815650025323
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 788806889308436225, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_Name
+      value: GrapleTarget
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062065832002107124, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 18.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062065832002107124, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.861
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062065832002107124, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062065832002107124, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062065832002107124, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062065832002107124, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062065832002107124, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062065832002107124, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062065832002107124, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062065832002107124, guid: 15ee8c59d8fa3424189437d43c95ca7a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 15ee8c59d8fa3424189437d43c95ca7a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2499,3 +2577,4 @@ SceneRoots:
   - {fileID: 1750058429}
   - {fileID: 411273413}
   - {fileID: 1639188148}
+  - {fileID: 2458312815650025323}
