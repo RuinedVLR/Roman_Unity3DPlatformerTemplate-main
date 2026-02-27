@@ -86,11 +86,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c35a646e3431c543b02c418ff0ac93a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graplePrefab: {fileID: 761429563710373109, guid: 50f22fb78b36c124d9241c13c8255c7b,
-    type: 3}
   player: {fileID: 400002}
-  grapleOrigin: {fileID: 4079581016077187414}
-  cam: {fileID: 0}
+  grappleOrigin: {fileID: 4079581016077187414}
+  grappleRange: {fileID: 7430649766852280618}
   target: {fileID: 788806889308436225, guid: 15ee8c59d8fa3424189437d43c95ca7a, type: 3}
   whatIsGrappleable:
     serializedVersion: 2
@@ -551,7 +549,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -583,7 +581,7 @@ Transform:
   m_GameObject: {fileID: 6941334205212778926}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.18, z: 0}
+  m_LocalPosition: {x: 0, y: 0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -604,7 +602,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

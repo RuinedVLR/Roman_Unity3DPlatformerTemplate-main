@@ -70,7 +70,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Graplehook",
+                    "name": "Grapplehook",
                     "type": "Button",
                     "id": "abce8705-22d2-49b6-81e5-e78d10d34b21",
                     "expectedControlType": "",
@@ -560,7 +560,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Graplehook",
+                    "action": "Grapplehook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -571,7 +571,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Graplehook",
+                    "action": "Grapplehook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
