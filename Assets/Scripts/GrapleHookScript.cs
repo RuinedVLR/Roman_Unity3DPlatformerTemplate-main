@@ -10,61 +10,86 @@ public class GrapleHookScript : MonoBehaviour
     [SerializeField] Rigidbody playerRb;
     [SerializeField] Transform grappleOrigin;
     [SerializeField] SphereCollider grappleRange;
-    [SerializeField] float grappleForce;
+    [SerializeField] float grappleForce = 70;
+    [SerializeField] Material ropeMaterial;
+    
     LineRenderer lr;
 
     [Header("Target Settings")]
-    
     [SerializeField] LayerMask whatIsGrappleable;
-    
+
+    [Header("Audio Clips")]
+    [SerializeField] AudioClip grappleOn;
+    [SerializeField] AudioClip grappleOff;
+
+    AudioSource source;
+
     Vector3 targetPosition;
 
     bool isHoldingInput = false;
     bool isGrappling = false;
 
+    bool hasPlayedGrappleOnSound = false;
+    bool hasPlayedGrappleOffSound = true;
+
     GameObject rope;
     LineRenderer ropeRenderer;
+
+    Collider lockedTarget = null;
 
     private void Awake()
     {
         lr = GetComponent<LineRenderer>();
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // check for grapplable targets inside the grapple range
-        var grapplables = GetGrapplableTargetsInsideRange();
-        if (grapplables.Length > 0)
+        if (isHoldingInput)
         {
-            // choose the nearest one
-            Collider nearest = grapplables[0];
-            float nearestDist = Vector3.Distance(grappleOrigin.position, nearest.transform.position);
-            for (int i = 1; i < grapplables.Length; i++)
+            // If target locked
+            if (lockedTarget != null)
             {
-                float d = Vector3.Distance(grappleOrigin.position, grapplables[i].transform.position);
-                if (d < nearestDist)
+                // check if target in radius
+                float dist = Vector3.Distance(grappleOrigin.position, lockedTarget.transform.position);
+                float maxRadius = grappleRange.radius * grappleRange.transform.lossyScale.x;
+
+                if (dist > maxRadius)
                 {
-                    nearest = grapplables[i];
-                    nearestDist = d;
+                    // if target is out of range - reset
+                    lockedTarget = null;
+                    isGrappling = false;
+                    return;
                 }
-            }
 
-            targetPosition = nearest.transform.position;
+                // if target in radius - pull
+                targetPosition = lockedTarget.transform.position;
 
-            if (isHoldingInput)
-            {
-                isGrappling = true; 
+                if (!hasPlayedGrappleOnSound)
+                {
+                    source.PlayOneShot(grappleOn);
+                    hasPlayedGrappleOnSound = true;
+                }
+
+                isGrappling = true;
                 playerRb.AddForce((targetPosition - player.position).normalized * grappleForce, ForceMode.Acceleration);
             }
             else
             {
-                isGrappling = false;
+                // if not locked - find a new target
+                var grapplables = GetGrapplableTargetsInsideRange();
+                if (grapplables.Length > 0)
+                {
+                    lockedTarget = GetNearest(grapplables);
+                    targetPosition = lockedTarget.transform.position;
+                }
             }
         }
-        
-        if(grapplables.Length == 0)
+        else
         {
+            // if button released - reset
+            lockedTarget = null;
             isGrappling = false;
         }
     }
@@ -81,6 +106,24 @@ public class GrapleHookScript : MonoBehaviour
             var rope = GameObject.FindWithTag("GrapleRope");
             if (rope != null) Destroy(rope);
         }
+    }
+
+    private Collider GetNearest(Collider[] list)
+    {
+        Collider nearest = list[0];
+        float nearestDist = Vector3.Distance(grappleOrigin.position, nearest.transform.position);
+
+        for (int i = 1; i < list.Length; i++)
+        {
+            float d = Vector3.Distance(grappleOrigin.position, list[i].transform.position);
+            if (d < nearestDist)
+            {
+                nearest = list[i];
+                nearestDist = d;
+            }
+        }
+
+        return nearest;
     }
 
     // gets all the colliders in whatIsGrapplable layer and with tag "GrapleTarget" that are inside the grappleRange sphere collider
@@ -115,6 +158,9 @@ public class GrapleHookScript : MonoBehaviour
         if (value == null)
             return;
 
+        hasPlayedGrappleOffSound = false;
+        hasPlayedGrappleOnSound = false;
+
         bool pressed = false;
 
         pressed = value.isPressed;
@@ -139,18 +185,15 @@ public class GrapleHookScript : MonoBehaviour
         {
             rope = new GameObject("Graple Rope");
             rope.tag = "GrapleRope";
-            LineRenderer lineRenderer = rope.AddComponent<LineRenderer>();
-            lineRenderer.startColor = Color.black;
-            lineRenderer.endColor = Color.black;
-            if(lineRenderer.material == null)
-            {
-                lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-            }
-            lineRenderer.startWidth = 0.1f;
-            lineRenderer.endWidth = 0.1f;
-            lineRenderer.positionCount = 2;
-            lineRenderer.SetPosition(0, grappleOrigin.position);
-            lineRenderer.SetPosition(1, targetPosition);
+            LineRenderer ropeRenderer = rope.AddComponent<LineRenderer>();
+            ropeRenderer.startColor = Color.black;
+            ropeRenderer.endColor = Color.black;
+            ropeRenderer.material = ropeMaterial;
+            ropeRenderer.startWidth = 0.1f;
+            ropeRenderer.endWidth = 0.1f;
+            ropeRenderer.positionCount = 2;
+            ropeRenderer.SetPosition(0, grappleOrigin.position);
+            ropeRenderer.SetPosition(1, targetPosition);
         }
         else
         {
@@ -158,10 +201,7 @@ public class GrapleHookScript : MonoBehaviour
             ropeRenderer = rope.GetComponent<LineRenderer>();
             ropeRenderer.startColor = Color.black;
             ropeRenderer.endColor = Color.black;
-            if (ropeRenderer.material == null)
-            {
-                ropeRenderer.material = new Material(Shader.Find("Sprites/Default"));
-            }
+            ropeRenderer.material = ropeMaterial;
             ropeRenderer.SetPosition(0, grappleOrigin.position);
             ropeRenderer.SetPosition(1, targetPosition);
         }
