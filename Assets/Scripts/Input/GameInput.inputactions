@@ -71,12 +71,12 @@
                 },
                 {
                     "name": "Grapplehook",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "abce8705-22d2-49b6-81e5-e78d10d34b21",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

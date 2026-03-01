@@ -7,26 +7,27 @@ public class GrapleHookScript : MonoBehaviour
 {
     [Header("Grapple Hook Settings")]
     [SerializeField] Transform player;
+    [SerializeField] Rigidbody playerRb;
     [SerializeField] Transform grappleOrigin;
     [SerializeField] SphereCollider grappleRange;
+    [SerializeField] float grappleForce;
     LineRenderer lr;
 
     [Header("Target Settings")]
-    [SerializeField] GameObject target;
+    
     [SerializeField] LayerMask whatIsGrappleable;
     
     Vector3 targetPosition;
 
-    bool isHoldingGrapple = false;
+    bool isHoldingInput = false;
+    bool isGrappling = false;
+
+    GameObject rope;
+    LineRenderer ropeRenderer;
 
     private void Awake()
     {
         lr = GetComponent<LineRenderer>();
-    }
-
-    void Start()
-    {
-        targetPosition = target.transform.position;
     }
 
     // Update is called once per frame
@@ -49,15 +50,40 @@ public class GrapleHookScript : MonoBehaviour
                 }
             }
 
-            if (isHoldingGrapple)
+            targetPosition = nearest.transform.position;
+
+            if (isHoldingInput)
             {
-                targetPosition = nearest.transform.position;
-                DrawRope();
+                isGrappling = true; 
+                playerRb.AddForce((targetPosition - player.position).normalized * grappleForce, ForceMode.Acceleration);
             }
+            else
+            {
+                isGrappling = false;
+            }
+        }
+        
+        if(grapplables.Length == 0)
+        {
+            isGrappling = false;
         }
     }
 
-    // Gets all the colliders in whatIsGrapplable layer and with tag "GrapleTarget" that are inside the grappleRange sphere collider
+    void LateUpdate()
+    {
+        if (isGrappling)
+        {
+            Debug.Log("Drawing Grapple Rope");
+            DrawRope();
+        }
+        else
+        {
+            var rope = GameObject.FindWithTag("GrapleRope");
+            if (rope != null) Destroy(rope);
+        }
+    }
+
+    // gets all the colliders in whatIsGrapplable layer and with tag "GrapleTarget" that are inside the grappleRange sphere collider
     private Collider[] GetGrapplableTargetsInsideRange()
     {
         if (grappleRange == null) return new Collider[0];
@@ -71,7 +97,7 @@ public class GrapleHookScript : MonoBehaviour
             Mathf.Abs(grappleRange.transform.lossyScale.z)
         );
 
-        Collider[] hits = Physics.OverlapSphere(worldCenter, worldRadius, whatIsGrappleable.value);
+        Collider[] hits = Physics.OverlapSphere(worldCenter, worldRadius, whatIsGrappleable);
         if (hits == null || hits.Length == 0) return new Collider[0];
 
         // filter hits by tag "GrapleTarget"
@@ -91,43 +117,19 @@ public class GrapleHookScript : MonoBehaviour
 
         bool pressed = false;
 
-        // Try read as float (1 when pressed, 0 when released) or as bool
-        try
-        {
-            pressed = value.Get<float>() > 0.5f;
-        }
-        catch
-        {
-            try
-            {
-                pressed = value.Get<bool>();
-            }
-            catch
-            {
-                pressed = false;
-            }
-        }
+        pressed = value.isPressed;
 
         if (pressed)
         {
             Debug.Log("Grapple Hook Activated (InputValue)");
-            isHoldingGrapple = true;
+            isHoldingInput = true;
         }
-        else
+        else if (!pressed)
         {
             Debug.Log("Grapple Hook Deactivated (InputValue)");
-            isHoldingGrapple = false;
+            isHoldingInput = false;
             var rope = GameObject.FindWithTag("GrapleRope");
             if (rope != null) Destroy(rope);
-        }
-    }
-
-    public void OnTriggerStay(Collider other)
-    {
-        if (isHoldingGrapple && other.gameObject.layer == LayerMask.NameToLayer("Grapleable"))
-        {
-            targetPosition = other.transform.position;
-            DrawRope();
         }
     }
 
@@ -135,9 +137,15 @@ public class GrapleHookScript : MonoBehaviour
     {
         if (GameObject.FindWithTag("GrapleRope") == null)
         {
-            GameObject rope = new GameObject("Graple Rope");
+            rope = new GameObject("Graple Rope");
             rope.tag = "GrapleRope";
             LineRenderer lineRenderer = rope.AddComponent<LineRenderer>();
+            lineRenderer.startColor = Color.black;
+            lineRenderer.endColor = Color.black;
+            if(lineRenderer.material == null)
+            {
+                lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+            }
             lineRenderer.startWidth = 0.1f;
             lineRenderer.endWidth = 0.1f;
             lineRenderer.positionCount = 2;
@@ -146,10 +154,26 @@ public class GrapleHookScript : MonoBehaviour
         }
         else
         {
-            GameObject rope = GameObject.FindWithTag("GrapleRope");
-            LineRenderer lineRenderer = rope.GetComponent<LineRenderer>();
-            lineRenderer.SetPosition(0, grappleOrigin.position);
-            lineRenderer.SetPosition(1, targetPosition);
+            rope = GameObject.FindWithTag("GrapleRope");
+            ropeRenderer = rope.GetComponent<LineRenderer>();
+            ropeRenderer.startColor = Color.black;
+            ropeRenderer.endColor = Color.black;
+            if (ropeRenderer.material == null)
+            {
+                ropeRenderer.material = new Material(Shader.Find("Sprites/Default"));
+            }
+            ropeRenderer.SetPosition(0, grappleOrigin.position);
+            ropeRenderer.SetPosition(1, targetPosition);
         }
+    }
+
+    public bool GetIsGrappling()
+    {
+        return isGrappling;
+    }
+
+    public Vector3 GetTargetPosition()
+    {
+        return targetPosition;
     }
 }

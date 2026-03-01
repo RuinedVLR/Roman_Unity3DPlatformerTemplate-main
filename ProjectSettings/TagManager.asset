@@ -13,6 +13,7 @@ TagManager:
   - Water
   - Cube
   - GrapleTarget
+  - GrapleRope
   layers:
   - Default
   - TransparentFX
